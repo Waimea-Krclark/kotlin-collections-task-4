@@ -181,9 +181,24 @@ fun main() {
  */
 fun placeMonkey(cageList: MutableList<String>, name: String): Int {
     println("+++ Putting $name into a cage")
-
-    // YOUR CODE HERE
+    for (i in 1..NUMCAGES) {
+        try {
+            if (cageList[i-1] == EMPTY){
+                if (cageList[i-2].first() != '!' && cageList[i].first() != '!'){
+                    cageList[i-1] = name
+                    return i
+                }
+                else{
+                    println("ERROR - Cannot place monkey here, it is next to a violent monkey")
+                }
+            }
+        } catch (e: IndexOutOfBoundsException) {
+            println("ERROR - No room for monkey to be placed")
+            return -1
+        }
+    }
     return -1
+
 }
 
 
@@ -201,8 +216,25 @@ fun placeMonkey(cageList: MutableList<String>, name: String): Int {
  */
 fun placeViolentMonkey(cageList: MutableList<String>, name: String): Int {
     println("+++ Putting $name (VIOLENT!) into a cage")
+    for (i in 1..NUMCAGES) {
+        try {
+            if (cageList[i-1] == EMPTY){
+                try {
+                    if (cageList[i-2] == EMPTY && cageList[i] == EMPTY){
+                        cageList[i-1] = "!"+name
+                        return i
+                    }
+                } catch (E: IndexOutOfBoundsException) {
+                    cageList[i-1] = "!"+name
+                    return i
+                }
+            }
+        } catch (e: IndexOutOfBoundsException) {
+            println("ERROR - No room for monkey to be placed")
+            return -1
+        }
 
-    // YOUR CODE HERE
+    }
     return -1
 }
 
